@@ -1,0 +1,265 @@
+{% extends 'base.html.twig' %}
+
+    {% block style %}
+        <style xmlns="http://www.w3.org/1999/html">
+            #u_donne {
+                font-weight: 600;
+                color: #0062cc;
+            }
+
+            label {
+                font-weight: 700;
+            }
+        </style>
+    {% endblock %}
+    {% block body %}
+        <div class="container" id="heart">
+            <div class="card border-0 shadow my-5">
+                <div class="card-body p-5"> <!-- this is were we write the body -->
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="text-center">
+                                <img src="{{ asset(app.user.image) }}" class="rounded-circle" width="150px"
+                                     height="150px" alt="avatar">
+                            </div>
+                            </br>
+                            <div>
+                                <a href="{{ path('profile_edit') }}" class="btn btn-info">
+                                    <span class="glyphicon glyphicon-log-out"></span><i class="fa fa-pencil-square-o"
+                                                                                        aria-hidden="true"
+                                                                                        title="Edit!"></i> Edit</a>
+                            </div>
+                            </br>
+                            <div>
+                                <a href="{{ path('profile_reset_password') }}" class="btn btn-info">
+                                    <span class="glyphicon glyphicon-log-out"></span><i class="fa fa-key"
+                                                                                        aria-hidden="true"
+                                                                                        title="Reset_Password"></i>
+                                    Reset password</a>
+                            </div>
+                            </br>
+                            <div>
+                                <a href="{{ path("app_logout") }}" class="btn btn-info"><span
+                                            class="glyphicon glyphicon-log-out"></span><i class="fa fa-sign-out"
+                                                                                          aria-hidden="true"></i> Log
+                                    out</a>
+                            </div>
+                            </br>
+                        </div>
+                        <div class="col-9">
+                            <nav>
+                                <div class="nav nav-tabs justify-content-end" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                                       role="tab" aria-controls="nav-home" aria-selected="true"><i class="fa fa-user"
+                                                                                                   aria-hidden="true"
+                                                                                                   title="Info!"></i></a>
+                                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab"
+                                       href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"><i
+                                                class="fa fa-info" aria-hidden="true" title="Plus d'info"></i></a>
+                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                                       href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"><i
+                                                class="fa fa-car" aria-hidden="true" title="Mes trajets!"></i></a>
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                     aria-labelledby="nav-home-tab">
+                                    <br> <br> <br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Nom d'utilisateur </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p id="u_donne"> {{ app.user.nom }}_{{ app.user.prenom }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Nom</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p id="u_donne">{{ app.user.nom }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Prenom</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p id="u_donne">{{ app.user.prenom }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Sexe</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p id="u_donne">{{ app.user.sexe }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Adresse mail</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p id="u_donne">{{ app.user.email }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Profession</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p id="u_donne">{{ app.user.profession }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Téléphone</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p id="u_donne">{{ app.user.numero }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Date de naissance</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p id="u_donne">{{ app.user.birthday|date("d/m/y") }}</p>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <h3 style="text-align: center"> Plus d'info ! </h3></br>
+                                    {% if (app.user.getvoiture==null) %}
+                                        <div class="alert-info">Vous pouvez edité cette partie en visitant le
+                                            tab suivante!
+                                        </div>
+                                    {% else %}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Marque de la voiture</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p id="u_donne">{{ app.user.getvoiture.marque }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Couleur</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p id="u_donne">{{ app.user.getvoiture.couleur }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Climatiseur</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p id="u_donne">{{ app.user.getvoiture.climatiseur }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Tabac</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p id="u_donne">{{ app.user.getvoiture.tabac }}</p>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% for message in app.flashes('success') %}
+                                        <div class="alert alert-success">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="tab-pane fade" id="nav-contact" role="tabpanel"
+                                     aria-labelledby="nav-contact-tab">
+                                    <br>
+                                    <h1 style="text-align: center"> Ajouter plus d'Infos ! </h1></br>
+                                    {{ form_start(form) }}
+                                    {{ form_row(form.marque,{'label':'Marque de la voiture','attr':{'placeholder':'La marque...'}}) }}
+                                    {{ form_row(form.couleur,{'label':'Couleur de la voiture'}) }}
+
+                                    <div class="row">
+                                        <div class="col-6">{{ form_row(form.Climatiseur) }}</div>
+                                        <div class="col-6">{{ form_row(form.Tabac) }}</div>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </div>
+
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                     aria-labelledby="nav-profile-tab">
+                                    <br>
+                                    {% if ((app.user.getTrajets)==null) %}
+                                        <div class="alert-info">Commencez <a href="#">va ajouté </a> vos propres trajets
+                                            !!
+                                        </div>
+                                    {% else %}
+                                        <table class="table ">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Depart</th>
+                                                <th scope="col">Arrivee</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Prix</th>
+                                                <th scope="col">Nb de places</th>
+                                                <th scope="col">Operation</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td colspan="6" style="text-align: center"> Les trajets valides !</td>
+                                            </tr>
+                                            {% for i in app.user.getTrajets %}
+                                                {% if date(i.date) >= date("now") %}
+                                                    <tr>
+                                                        <td>{{ i.Depart }}</td>
+                                                        <td>{{ i.Arrivee }}</td>
+                                                        <td>{{ i.Date|date }}</td>
+                                                        <td>{{ i.prix }}</td>
+                                                        <td>{{ i.places }}</td>
+                                                        <td><a href="{{ path('trajet_supprimer',{'id':i.id}) }}"><i
+                                                                        class="fa fa-trash fa-2x"
+                                                                        aria-hidden="true"></i></a></td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <tr>
+                                                <td colspan="5"></td>
+                                                <td><a href="{{ path('postuler') }}"><i class="fa fa-plus-circle fa-2x"
+                                                                                        aria-hidden="true"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6" style="text-align: center"> Les trajets dépassés !</td>
+                                            </tr>
+                                            {% for i in app.user.getTrajets %}
+                                                {% if date(i.date) < date("now") %}
+                                                    <tr>
+                                                        <td>{{ i.Depart }}</td>
+                                                        <td>{{ i.Arrivee }}</td>
+                                                        <td>{{ i.Date|date }}</td>
+                                                        <td>{{ i.prix }}</td>
+                                                        <td>{{ i.places }}</td>
+                                                        <td><a href="{{ path('trajet_supprimer',{'id':i.id}) }}"><i
+                                                                        class="fa fa-trash fa-2x"
+                                                                        aria-hidden="true"></i></a></td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </br>   </br>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+

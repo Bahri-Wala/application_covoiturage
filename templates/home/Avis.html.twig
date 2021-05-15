@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <br>
+    <div class="center btmspace-80">
+        <h6 class="heading underline font-x2">Les Avis...!</h6>
+    </div>
+    <br>
+    {% for i in commentaire %}
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-2">
+                <figure class="clear">
+                    <figcaption>
+                        <h6 class="heading">{{ i.auteur }}</h6>
+                        <em>{{ i.date | date }}</em></figcaption>
+                </figure>
+            </div>
+            <div class="col">
+                <blockquote>
+                    {{ i.contenu }}
+                </blockquote>
+            </div>
+        </div>
+        <br>
+    {% else %}
+        <h3> Il n'y a pas d'avis...</h3>
+    {% endfor %}
+    <br>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            {{ form_start(form) }}
+            {{ form_row(form.Auteur,{'label':'Auteur','attr':{'placeholder':'Votre nom...'}}) }}
+            {{ form_row(form.contenu,{'label':'Avis','attr':{'placeholder':'Votre commentaire...'}}) }}
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

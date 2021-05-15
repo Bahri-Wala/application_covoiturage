@@ -1,0 +1,21 @@
+
+#texts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+#texts {
+    justify-content: space-between;
+    font-size: medium;
+}
+
+#text p {
+    font-family: serif;
+}
+
+.mini-title {
+    color: #4682B4;
+    font-weight: bolder;
+}

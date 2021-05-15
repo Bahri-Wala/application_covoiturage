@@ -1,0 +1,144 @@
+{% extends '/admin/maBase.html.twig' %}
+{% block mainTitle %}
+    Trajets
+{% endblock %}
+{% block title %}
+    Trajets
+{% endblock %}
+{% block body %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <section class="container">
+        <hr>
+        <div class="sidebar-search">
+            <div class="input-group custom-search-form" style="margin-bottom: 20px">
+                <input type="text" class="form-control" id="search_text" placeholder="Chercher ici ...">
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("#search_text").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#myTable tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>
+        <!-- Fin barre de recherche -->
+        <!-- tableau de resultats -->
+        <table class="table table-borderless table-hover ">
+            <thead>
+
+            <th>ID</th>
+            <th>User ID</th>
+            <th>Départ</th>
+            <th>Arrivé</th>
+            <th>Date</th>
+            <th>Prix</th>
+            <th>Places</th>
+            <th>Supprimer</th>
+            </tr>
+            </thead>
+            <tbody id="myTable">
+            {% for trajet in trajets %}
+
+                <tr style="cursor: pointer" title="Plus de details">
+
+                    <td>{{ trajet.id }}</td>
+                    <td>{{ trajet.user.id }}</td>
+                    <td>{{ trajet.Depart }}</td>
+                    <td>{{ trajet.Arrivee }}</td>
+                    <td>{{ trajet.Date | format_datetime() }}</td>
+                    <td>{{ trajet.prix }}</td>
+                    <td>{{ trajet.places }}</td>
+                    <td><a href="{{ path('supprimer_trajet',{'id':trajet.id }) }}">
+                            <i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    {#
+        <section style="margin: 50px">
+            <hr>
+            <div class="sidebar-search">
+                <div class="input-group custom-search-form" style="margin-bottom: 20px">
+                    <input type="text" class="form-control" id="search_text" placeholder="Chercher ici ...">
+                </div>
+            </div>
+            <script>
+                $(document).ready(function(){
+                    $("#search_text").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("#myTable tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+            <!-- Fin barre de recherche -->
+            <!-- tableau de resultats -->
+            <table class="table table-borderless table-hover " >
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Depart</th>
+                    <th>Arivee</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody id="myTable">
+                {% for trajet in trajets %}
+                    {% if date(trajet.date) >= date("now") %}
+                        <tr onclick="document.location = ' {{ path('info_trajet',{'id': trajet.id }) }}';" style="cursor: pointer" title="Plus de details">
+                            <td>{{ trajet.getuser.nom }}</td>
+                            <td>{{ trajet.getuser.prenom }}</td>
+                            <td>{{ trajet.depart }}</td>
+                            <td>{{ trajet.arrivee }}</td>
+                            <td>{{ trajet.date|date }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    #}
+    {#    </table>
+
+        <table class="table ">
+            <thead>
+            <th>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Départ</th>
+                <th>Arrivé</th>
+                <th>Date</th>
+                <th>Prix</th>
+                <th>Places</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for trajet in trajets %}
+                <tr>
+                    <td>{{ trajet.id }}</td>
+                    <td>{{ trajet.user.id }}</td>
+                    <td>{{ trajet.Depart }}</td>
+                    <td>{{ trajet.Arrivee }}</td>
+                    <td>{{ trajet.Date | format_datetime() }}</td>
+                    <td>{{ trajet.prix }}</td>
+                    <td>{{ trajet.places }}</td>
+                    <td><a href="{{ path('supprimer_trajet',{'id':trajet.id })}}">
+                            <i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>#}
+{% endblock %}

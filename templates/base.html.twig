@@ -1,19 +1,184 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+<head>
+    <title>Wasselni: site de covoiturage en Tunisie</title>
+    <meta name="description"
+          content="Avec Wasselni, le covoiturage n'a jamais été aussi simple. Wasselni vous donne la main de trouver des trajets de covoiturage en Tunisie selon vos besoins.">
+    <meta name="author" content="Melek Elloumi, Wala Bahri, Atya Hazem, Hamza Mahjoub">
+    <meta name="keywords"
+          content="Wasselni,covoiturage,tunisie,tunis, annonce, annonces, trajet, sfax, sousse, monastir, navette, tn, bizerte">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ asset("layout/styles/layout.css") }}" type="text/css" media="all">
+    <link rel="stylesheet" href="{{ asset("bootstrap_assets/design.css") }}" type="text/css" media="all">
+    <link rel="stylesheet" href="{{ asset("bootstrap_assets/bootstrap.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("node_modules/font-awesome/css/font-awesome.css") }}">
+    {% block style %}
+    {% endblock %}
+</head>
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+<body id="top">
+
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+
+<div class="wrapper row0">
+    <header id="header" class="hoc clear">
+        <!-- ################################################################################################ -->
+        <div id="logo" class="one_quarter first">
+            <h1 class="logoname clear"><a href="{{ path("home") }}"><i class="fa fa-car"></i> <span>Wasselni</span></a>
+            </h1>
+            <p>Site de covoiturage-Tunisie</p>
+        </div>
+        <div class="three_quarter">
+            <ul class="nospace clear">
+                <li class="one_third first">
+                    <div class="block clear"><a href="#"><i class="fas fa-phone"></i></a>
+                        <span><strong>Give us a call:</strong> +216 28369820</span></div>
+                </li>
+                <li class="one_third">
+                    <div class="block clear"><a href="#"><i class="fas fa-envelope"></i></a> <span><strong>Send us a mail:</strong> wassalnisite@gmail.com</span>
+                    </div>
+                </li>
+                <li class="one_third">
+                    <div class="block clear"><a href="#"><i class="fas fa-clock"></i></a>
+                        <span><strong> Mon. - Sat.:</strong> 08.00am - 18.00pm</span></div>
+                </li>
+            </ul>
+        </div>
+        <!-- ################################################################################################ -->
+    </header>
+</div>
+
+<!-- ################################################################################################ -->
+
+<div class="wrapper row1">
+    <div class="hoc clear">
+        <!-- ################################################################################################ -->
+        <nav id="mainav">
+            <ul class="clear">
+                <li><a href="{{ path('Accueil') }}">Accueil</a></li>
+                <li><a href="{{ path('recherche') }}">Rechercher trajet</a></li>
+                <li><a href="{{ path('postuler') }}">Postuler trajet</a></li>
+                <li>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a href="{{ path('profile') }}">Mon profil</a>
+
+                    {% else %}
+                        <a href="{{ path('login') }}">Se Connecter</a>
+                    {% endif %}
+                </li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li><a href="{{ path('app_logout') }}"> se deconnecter</a></li>
+
+                {% else %}
+                    <li><a href="{{ path('registration') }}">Créer compte</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <!-- ################################################################################################ -->
+    </div>
+</div>
+
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+{% for message in app.flashes('danger') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
+{% for message in app.flashes('message') %}
+    <div class="alert alert-info">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% block body %}
+
+{% endblock %}
+
+
+<div class="wrapper row4">
+    <footer id="footer" class="hoc clear">
+        <!-- ################################################################################################ -->
+
+        <!-- ################################################################################################ -->
+        <div class="one_third first">
+            <h1 class="logoname clear"><a href="index.html"><i class="fas fa-handshake"></i>
+                    <span>Site Name..</span></a></h1>
+            <p class="btmspace-30">Description du site .. </p>
+            <ul class="faico clear">
+                <li><a class="faicon-facebook" href="#"><i class="fab fa-facebook"></i></a></li>
+                <li><a class="faicon-google-plus" href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                <li><a class="faicon-linkedin" href="#"><i class="fab fa-linkedin"></i></a></li>
+                <li><a class="faicon-twitter" href="#"><i class="fab fa-twitter"></i></a></li>
+                <li><a class="faicon-vk" href="#"><i class="fab fa-vk"></i></a></li>
+            </ul>
+        </div>
+        <div class="one_third">
+            <h6 class="heading">Nous Contactez...</h6>
+            <ul class="nospace linklist contact">
+                <li><i class="fas fa-map-marker-alt"></i>
+                    <address>
+                        Street Name &amp; Number, Town, Postcode/Zip
+                    </address>
+                </li>
+                <li><i class="fas fa-phone"></i> +00 (123) 456 7890</li>
+                <li><i class="fas fa-fax"></i> +00 (123) 456 7890</li>
+                <li><i class="far fa-envelope"></i> wassalnisite@gmail.com</li>
+            </ul>
+        </div>
+        <div class="one_third">
+            <h6 class="heading">Savoir Plus...</h6>
+            <ul class="nospace linklist">
+
+                <li><a href="{{ path("Questions_Frequentes") }}"><i class="fa fa-question fa-2x" aria-hidden="true"
+                                                                    title="Questions fréquentes!"></i> Questions
+                        fréquentes! </a></li>
+                <li><a href="{{ path('Mentions_legales') }}"><i class="fa fa-exclamation-triangle fa-2x"
+                                                                aria-hidden="true"
+                                                                title="Mentions Légales!"></i> Mentions Légales!</a>
+                </li>
+                <li><a href="{{ path('Nos_conseils') }}"><i class="fa fa-ambulance fa-2x" aria-hidden="true"
+                                                            title="Nos Conseils!"></i> Nos
+                        Conseils!</a></li>
+                <li><a href="{{ path("Qui_sommes_nous") }}"><i class="fa fa-info-circle fa-2x" aria-hidden="true"
+                                                               title="Qui somme-nous ? "></i> Qui
+                        somme-nous ?</a></li>
+            </ul>
+        </div>
+        <!-- ################################################################################################ -->
+    </footer>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row5">
+    <div id="copyright" class="hoc clear">
+        <!-- ################################################################################################ -->
+        <p class="fl_left" style=" font-weight: 600; color: #0062cc;">Copyright &copy; 2020 - All Rights Reserved - <a
+                    href="#">Wassalni</a></p>
+
+        <!-- ################################################################################################ -->
+    </div>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<a id="backtotop" href="#top"><i class="fas fa-chevron-up"></i></a>
+<!-- JAVASCRIPTS -->
+<script src="{{ asset("layout/scripts/jquery.min.js") }}"></script>
+<script src="{{ asset("layout/scripts/jquery.backtotop.js") }}"></script>
+<script src="{{ asset("layout/scripts/jquery.mobilemenu.js") }}"></script>
+<script src="{{ asset("bootstrap_assets/jquery.min.js") }}"></script>
+<script src="{{ asset("bootstrap_assets/popper.min.js") }}"></script>
+<script src="{{ asset("bootstrap_assets/bootstrap.min.js") }}"></script>
+
+</body>
 </html>

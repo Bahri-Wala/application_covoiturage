@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+ {% block body %}
+     {% if app.user %}
+         <div class="container" id="heart">
+
+             <div class="card border-0 shadow my-5">
+                 <div class="card-body p-5"> <!-- this is were we write the body -->
+                     <h1 style="text-align: center"> Postuler votre trajet ! </h1></br>
+                     {% for message in app.flashes("Error") %}
+                         <div class="alert alert-danger">{{ message }}</div>
+                     {% endfor %}
+                     {{ form_start(form) }}
+                     {{ form_row(form.Depart,{'label':'Lieu de depart','id':'myInput1','class':'autocomplete'}) }}
+                     {{ form_row(form.Arrivee,{'label':'Destination','id':'myInput2','class':'autocomplete'}) }}
+                     {{ form_row(form.Date,{'label':'Date'}) }}
+                     <div class="row">
+                         <div class="col-6">{{ form_row(form.prix,{'label':'Prix'}) }}</div>
+                         <div class="col-6">{{ form_row(form.places,{'label':'Nombre de places'}) }}</div>
+                     </div>
+                     {{ form_rest(form) }}
+                 </div>
+             </div>
+         </div>
+         <script>
+             function autocomplete(inp, arr) {
+                 var currentFocus;
+                 inp.addEventListener("input", function (e) {
+                     var a, b, i, val = this.value;
+                     closeAllLists();
+                     if (!val) {
+                         return false;
+                     }
+                     currentFocus = -1;
+                     a = document.createElement("DIV");
+                     a.setAttribute("id", this.id + "autocomplete-list");
+                     a.setAttribute("class", "autocomplete-items");
+                     this.parentNode.appendChild(a);
+                     for (i = 0; i < arr.length; i++) {
+                         if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                             b = document.createElement("DIV");
+                             b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                             b.innerHTML += arr[i].substr(val.length);
+                             b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                             b.addEventListener("click", function (e) {
+                                 inp.value = this.getElementsByTagName("input")[0].value;
+                                 closeAllLists();
+                             });
+                             a.appendChild(b);
+                         }
+                     }
+                 });
+                 inp.addEventListener("keydown", function (e) {
+                     var x = document.getElementById(this.id + "autocomplete-list");
+                     if (x) x = x.getElementsByTagName("div");
+                     if (e.keyCode == 40) {
+                         currentFocus++;
+                         addActive(x);
+                     } else if (e.keyCode == 38) {
+                         currentFocus--;
+                         addActive(x);
+                     } else if (e.keyCode == 13) {
+                         e.preventDefault();
+                         if (currentFocus > -1) {
+                             if (x) x[currentFocus].click();
+                         }
+                     }
+                 });
+
+                 function addActive(x) {
+                     if (!x) return false;
+                     removeActive(x);
+                     if (currentFocus >= x.length) currentFocus = 0;
+                     if (currentFocus < 0) currentFocus = (x.length - 1);
+                     x[currentFocus].classList.add("autocomplete-active");
+                 }
+
+                 function removeActive(x) {
+                     for (var i = 0; i < x.length; i++) {
+                         x[i].classList.remove("autocomplete-active");
+                     }
+                 }
+
+                 function closeAllLists(elmnt) {
+                     var x = document.getElementsByClassName("autocomplete-items");
+                     for (var i = 0; i < x.length; i++) {
+                         if (elmnt != x[i] && elmnt != inp) {
+                             x[i].parentNode.removeChild(x[i]);
+                         }
+                     }
+                 }
+
+                 document.addEventListener("click", function (e) {
+                     closeAllLists(e.target);
+                 });
+             }
+
+             var cities = ["Tunis", "Sidi Hassine", "Sidi Bou Saïd", "Le Kram", "Le Bardo", "La Marsa", "La Goulette", "Carthage", "Utique", "Tinja", "Sejnane", "Ras Jebel", "Raf Raf", "Metline", "Menzel Jemil", "Menzel Bourguiba", "Menzel Abderrahmane", "Mateur", "Joumine", "Ghezala", "Ghar El Melh", "El Hachachna", "El Alia", "Bizerte", "Aousja", "Béja", "Testour", "Téboursouk", "Slouguia", "SidiIsmaïl", "Ouchtata-Jmila", "Nefza", "Medjez el-Bab", "Goubellat", "ElMaâgoula", "Amdoun", "BenArous", "Radès", "Naassen", "Mornag", "Mohamedia", "Mégrine", "Khalidia", "Hammam Lif", "Hammam Chott", "Fouchana", "Ezzahra", "El Mourouj", "Bou Mhel el-Bassatine", "Zarat", "Teboulbou", "Oudhref", "Nouvelle Matmata", "Métouia", "Menzel El Habib", "Matmata", "Mareth", "Kettana", "Habib Thameur Bouatouch", "Ghannouch", "Gabès", "El Hamma", "Dkhilet Toujane", "Chenini Nahal", "Bouchemma", "Zannouch", "Sidi Boubaker", "Sidi Aïch", "Sened", "Redeyef", "Moularès", "Métlaoui", "Mdhilla", "Lela", "Gafsa", "El Ksar", "El Guettar", "Belkhir", "Tabarka", "Souk Sebt", "Oued Meliz", "Khmairia", "Kalaa-Maaden-Farksan", "Jouaouda", "Jendouba", "Ghardimaou", "Fernana", "Bou Salem", "Beni M'Tir", "Balta-Bou Aouane", "Aïn Sobh-Nadhour", "Aïn Draham", "Sisseb-Driaat", "Sbikha", "Raqqada", "Oueslatia", "Nasrallah", "Menzel Mehiri", "Kairouan", "Jhina", "Hajeb El Ayoun", "Haffouz", "El Alâa", "Echrarda", "Chraitia-Ksour", "Chebika", "Chaouachi", "Bou Hajla", "Aïn El Beïdha", "Aïn Djeloula", "Abida", "Thélepte", "Thala", "Sbiba", "Sbeïtla", "Rakhmat", "Majel Bel Abbès", "Khmouda", "Kasserine", "Jedelienne", "Hassi El Ferid", "Haïdra", "Foussana", "Fériana", "Ezzouhour", "Ennour", "El Ayoun", "Chrayaa-Machrek Chams", "Bouzguem", "Aïn Khmaissia", "Souk Lahad", "Rjim Maatoug", "Kébili", "Jemna", "Faouar", "El Golâa", "Douz", "Bechri-Fatnassa", "Bechli-Blidet-Jerssin", "Sidi Thabet", "Raoued", "Mnihla", "La Soukra", "Kalâat el-Andalous", "Ettadhamen", "Ariana", "Tebourba", "Oued Ellil", "Mornaguia", "La Manouba", "El Batan", "El Bassatine", "Douar Hicher", "Djedeida", "Den Den", "Borj El Amri", "Zelba", "Tlelsa", "Sidi Zid-Awled Moulahem", "Sidi Alouane", "Rejiche", "Ouled Chamekh", "Melloulèche", "Mahdia", "Ksour Essef", "Kerker", "Hkaima", "Hebira", "Essouassi", "El Jem", "El Bradâa", "Chorbane", "Chebba", "Bou Merdes", "Zarzis Nord", "Zarzis", "Sidi Makhlouf", "Médenine", "Djerba - Midoun", "Djerba - Houmt Souk", "Djerba - Ajim", "Boughrara", "Beni Khedache", "Ben Gardane", "Zéramdine", "Zaouiet Kontoch", "Touza", "Téboulba", "Sidi Jedidi", "Sidi Bennour", "Sidi Ameur-Mesjed-Aïssa", "Sayada", "Sahline Moôtmar", "Ouerdanine", "Monastir", "Moknine", "Menzel Kamel", "Menzel Hayet", "Menzel Fersi", "Menzel Ennour", "Lamta", "Ksibet el-Médiouni", "Ksar Hellal", "Khniss", "Jemmal", "El Masdour-Menzel Harb", "El Ghnada", "Cherahil", "Bouhjar", "Bennane-Bodheur", "Beni Hassen", "Bembla-Mnara", "Bekalta", "Amiret Touazra", "Amiret Hajjaj", "Amiret El Fhoul", "Zaouiet Djedidi", "Tazougrane-Boukrim-Zaouiet El Mgaies", "Tazarka", "Takelsa", "Somâa", "Soliman", "Nabeul", "Menzel Temime", "Menzel Horr", "Menzel Bouzelfa", "Korbous", "Korba", "Kélibia", "Hammamet", "Hammam Ghezèze", "Grombalia", "Fondouk Jedid-Seltene", "El Mida", "El Maâmoura", "El Haouaria", "Dar Chaâbane", "Dar Allouch", "Chrifet-Boucharray", "Bou Argoub", "Béni Khiar", "Béni Khalled", "Azmour", "Thyna", "Skhira", "Sfax", "Sakiet Ezzit", "Sakiet Eddaïer", "Ouabed Khazanet", "Nadhour-Sidi Ali Ben Abed", "Menzel Chaker", "Mahrès", "Kerkennah", "Jebiniana", "Hazeg Ellouza", "Hadjeb", "Gremda", "Graïba", "Ennasr", "El Hencha", "El Amra", "El Aïn", "Chihia", "Bir Ali Ben Khalifa", "Agareb", "Aachech-Aouadna-Boujarbou-Majel Draj", "Souk Jedid", "Sidi Bouzid", "Sidi Ali Ben Aoun", "Regueb", "Rahal", "Ouled Haffouz", "Mezzouna", "Menzel Bouzaiane", "Meknassy", "Mansoura", "Lessouda", "Jilma", "Faiedh Bennour", "Essaïda", "Cebbala Ouled Asker", "Bir El Hafey", "Baten Ghzal", "Siliana", "Sidi Morched", "Sidi Bou Rouis", "Rouhia", "Makthar", "Kesra", "Hbabsa", "Gaâfour", "El Krib", "El Aroussa", "Bou Arada", "Bargou", "Zaouiet Sousse", "Sousse", "Sidi El Hani", "Sidi Bou Ali", "Messaadine", "M'saken", "Ksibet Thrayet", "Kondar", "Kalâa Seghira", "Kalâa Kebira", "Hergla", "Hammam Sousse", "Grimet-Hicher", "Ezzouhour", "Enfida", "Chott Meriem", "Bouficha", "Akouda", "Tataouine Sud", "Tataouine", "Smâr", "Remada", "Ghomrassen", "Dehiba", "Bir Lahmar", "Tozeur", "Tamerza", "Nefta", "Hazoua", "El Hamma du Jérid", "Degache", "Zriba", "Zaghouan", "Saouaf", "Nadhour", "El Fahs", "El Amaiem", "Djebel Oust", "Bir Mcherga", "Zaafrana-Dir Kef", "Touiref", "Tajerouine", "Sakiet Sidi Youssef", "Nebeur", "Menzel Salem", "Le Sers", "Le Kef", "Kalaat Senan", "Kalâat Khasba", "Jérissa", "El Marja", "El Ksour", "Dahmani", "Bohra"]
+
+             autocomplete(document.getElementById("myInput1"), cities);
+             autocomplete(document.getElementById("myInput2"), cities);
+         </script>
+     {% else %}
+         <div class="container" id="heart">
+
+             <div class="card border-0 shadow my-5">
+                 <div class="card-body p-5"> <!-- this is were we write the body -->
+                     <h1 style="text-align: center"> Vous devez <a href="{{ path('app_login') }}">Se Connectez</a>
+                         d'abord ou <a href="{{ path('registration') }}">Créez un Compte</a> pour pouvoir postulez vos
+                         trajets...</h1></br>
+                 </div>
+             </div>
+         </div>
+     {% endif %}
+
+ {% endblock %}
+
+
+

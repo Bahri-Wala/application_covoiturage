@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+                                        <!-- Partie de filtrage -->
+
+        <section style="background: darkblue url('{{ asset('layout/images/filtrage-bg.jpg') }}') no-repeat ;height:300px;margin-top:-10px;background-size:100vw 100%;padding-top:30px;padding-left:8vw;color: #FFFFFF">
+        <h2>Menu de filtrage:</h2>
+        <div>Trouvez le trajet que vous cherchez :</div>
+        <form autocomplete="off" action="{{ path('filter') }}" method="get" style="color:#FFFFFF;margin-top: 20px;">
+            <label for="depart-select" >Lieu de depart:
+                <select name="depart" id="depart-select" class="custom-select" style="font-size: larger">
+                    <option value="" selected disabled hidden>Choisir ici</option>
+                    {% for i in cities.governorates %}
+                        <optgroup label="{{ i.name }}">
+                            {% for j in i.cities %}
+                                <option>{{ j }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="arrivee-select">Destination :
+                <select name="arrivee" id="arrivee-select" class="custom-select" style="font-size: larger">
+                    <option value="" selected disabled hidden>Choisir ici</option>
+                    {% for i in cities.governorates %}
+                        <optgroup label="{{ i.name }}">
+                            {% for j in i.cities %}
+                                <option>{{ j }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    {% endfor %}
+                </select>
+            </label>
+            <div class="autocomplete" style="width:20vw;display: inline-block">
+                <label for="date-select">Date :
+                    <input name="date" type="datetime-local" id="date-select" class="custom-select" style="font-size: larger">
+                </label>
+            </div>
+            <input type="reset" style="width: 15vw;margin-top: 20px;height: 30px;color: black;margin-left: 15px;font-size: larger;display: inline-block">
+            <input type="submit" style="width: 15vw;margin-top: 20px;height: 30px;color: black;font-size: larger;display: inline-block;float: left;">
+        </form>
+        </section>
+
+                                  <!-- Fin de la partie de filtrage -->
+                                  <!-- barre de recherche -->
+
+    <section style="margin: 50px">
+    <hr>
+    <div class="sidebar-search">
+        <div class="input-group custom-search-form" style="margin-bottom: 20px">
+            <input type="text" class="form-control" id="search_text" placeholder="Chercher ici ...">
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#search_text").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+                                    <!-- Fin barre de recherche -->
+                                    <!-- tableau de resultats -->
+
+    <table class="table table-borderless table-hover " >
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Depart</th>
+            <th>Arivee</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody id="myTable">
+        {% for trajet in trajets %}
+            {% if date(trajet.date) >= date("now") %}
+                <tr onclick="document.location = ' {{ path('info_trajet',{'id': trajet.id }) }}';"
+                    style="cursor: pointer" title="Plus de details">
+                    <td>{{ trajet.getuser.nom }}</td>
+                    <td>{{ trajet.getuser.prenom }}</td>
+                    <td>{{ trajet.depart }}</td>
+                    <td>{{ trajet.arrivee }}</td>
+                    <td>{{ trajet.date|date }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if currentpage > 1 %}
+                {% set p=currentpage-1 %}
+                <li class="page-item"><a class="page-link" href="{{ path('recherche',{'page':p}) }}">Previous</a></li>
+            {% else %}
+            {% endif %}
+            {% if pages > 1 %}
+            {% for p in 1..pages %}
+                {% if currentpage == p %}
+                <li class="page-item active" id="pagination" ><a class="page-link" href="{{ path('recherche',{'page':p}) }}">{{ p }}<span class="sr-only"></span></a></li>
+            {% else %}
+                <li class="page-item" id="pagination" ><a class="page-link" href="{{ path('recherche',{'page':p}) }}">{{ p }}</a></li>
+            {% endif %}
+            {% endfor %}
+                {% else %}
+                    <li class="page-item active" id="pagination" ><a class="page-link" href="{{ path('recherche',{'page':1}) }}">1<span class="sr-only"></span></a></li>
+            {% endif %}
+            {% if currentpage < pages %}
+            {% set p=currentpage+1 %}
+            <li class="page-item"><a class="page-link" href="{{ path('recherche',{'page':p}) }}">Next</a></li>
+            {% else %}
+            {% endif %}
+        </ul>
+    </nav>
+    </section>
+
+                                          <!-- fin tableau de resultats -->
+{% endblock %}

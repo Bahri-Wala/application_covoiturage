@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container" id="heart">
+        <div class="card border-0 shadow my-5" style="display: flex;flex-direction: row;justify-content: space-between">
+            <div class="card-body p-5" style="display: flex;flex-direction: column">
+                <!-- this is were we write the body -->
+
+                <h1 style="position: relative;left: 4%"><i class="fa fa-road" aria-hidden="true"></i> DE <span
+                            style="color: blue"> {{ trajet.Depart }} </span> A <span
+                            style="color:blue;"> {{ trajet.Arrivee }} </span></h1>
+                <br>
+                <h3 style="position: relative;left: 4%"><i class="fa fa-user" aria-hidden="true"></i> Annonceur: <span
+                            style="color: blue">{{ trajet.getuser.nom }} {{ trajet.getuser.prenom }}</span></h3>
+                <br>
+                <h3 style="position: relative;left: 8%"><i class="fa fa-phone" aria-hidden="true"></i> N° Tel: <span
+                            style="color: blue">{{ trajet.getuser.numero }}</span></h3>
+                <br>
+                <div style="display: flex;flex-direction: row;">
+                    <h3 style="position: relative;left: 6%"><i class="fa fa-money" aria-hidden="true"></i>
+                        Prix: {{ trajet.prix }}dt</h3>
+                    <h3 style="position: relative;left: 10%"><i class="fa fa-users" aria-hidden="true"></i>
+                        Place: {{ trajet.places }}</h3>
+                </div>
+                <br>
+                <div style="display: flex;flex-direction: row">
+                    <h3 style="position: relative;left: 6%"><i class="fa fa-calendar"
+                                                               aria-hidden="true"></i> {{ trajet.Date|date('d/m/y') }}
+                    </h3>
+                    <h3 style="position: relative;left: 10%"><i class="fa fa-clock-o"
+                                                                aria-hidden="true"></i> {{ trajet.Date|date('h:m') }}
+                    </h3>
+                </div>
+                <br>
+                <a href="{{ path('info_user',{'id': trajet.getuser.id }) }}" title="plus d'info sur l'utilisateur"
+                   style="position: relative;left: 15%">
+                    <button type="button" class="btn btn-light"><i class="fa fa-info"></i>
+                        Plus Details!
+                    </button>
+                </a>
+            </div>
+            <div style="max-width: 30%;position: relative;left: -10%;top: 15px"> <!-- this is were we write the body -->
+                <img src="{{ asset(trajet.getuser.image) }}" class="rounded-circle">
+            </div>
+        </div>
+        </br>   </br>
+    </div>
+{% endblock %}

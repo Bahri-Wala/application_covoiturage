@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container" id="heart">
+        <div class="card border-0 shadow my-5">
+            <div class="card-body p-5"> <!-- this is were we write the body -->
+                <h1 style="text-align: center">Mot de passe oublié ! </h1>
+                {{ form_start(emailForm) }}
+                {{ form_rest(emailForm) }}
+                {{ form_end(emailForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

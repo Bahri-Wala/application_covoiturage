@@ -1,0 +1,108 @@
+{% extends '/admin/maBase.html.twig' %}
+
+{% block body %}
+    <div class="container">
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+        <section class="container">
+            <hr>
+            <div class="sidebar-search">
+                <div class="input-group custom-search-form" style="margin-bottom: 20px">
+                    <input type="text" class="form-control" id="search_text" placeholder="Chercher ici ...">
+                </div>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    $("#search_text").on("keyup", function () {
+                        var value = $(this).val().toLowerCase();
+                        $("#myTable tr").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+            <!-- Fin barre de recherche -->
+            <!-- tableau de resultats -->
+            <table class="table table-borderless table-hover ">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Photo</th>
+                    <th>Nom</th>
+                    <th>prénom</th>
+                    <th>Tél</th>
+                    <th>email</th>
+                    <th>Supprimer</th>
+                </tr>
+                </thead>
+                <tbody id="myTable">
+                {% for personne in users %}
+
+                    <tr style="cursor: pointer" title="Plus de details">
+
+                        <td>{{ personne.id }}</td>
+                        <td>
+                            <img
+                                    width="50px"
+                                    height="50px"
+                                    class="rounded-circle"
+                                    src="{{ personne.image }} " alt="{{ personne.id }}"></td>
+                        <td>{{ personne.nom }}</td>
+                        <td>{{ personne.prenom }}</td>
+                        <td>{{ personne.numero }}</td>
+                        <td>{{ personne.email }}</td>
+                        <td><a href="{{ path('supprimer_user',{'id':personne.id }) }}"><i class="fa fa-trash fa-2x"
+                                                                                          aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        {#
+                <table class="table ">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Photo</th>
+                        <th>Nom</th>
+                        <th>prénom</th>
+                        <th>Tél</th>
+                        <th>email</th>
+                        <th>Supprimer</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for personne in users %}
+                        <tr>
+                            <td>{{ personne.id }}</td>
+                            <td>
+                                <img
+                                        width="50px"
+                                        height="50px"
+                                        class="rounded-circle"
+                                        src="{{ personne.image }} " alt="{{ personne.id }}"></td>
+                            <td>{{ personne.nom }}</td>
+                            <td>{{ personne.prenom }}</td>
+                            <td>{{ personne.numero }}</td>
+                            <td>{{ personne.email }}</td>
+                            <td><a href="{{ path('supprimer_user',{'id':personne.id })}}"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+        #}
+    </div>
+{% endblock %}
+{% block title %}
+    Utilisateurs
+{% endblock %}
+{% block mainTitle %}
+    Les utilisateurs de votre site :
+{% endblock %}

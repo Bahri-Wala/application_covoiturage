@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container" id="heart">
+        <div class="card border-0 shadow my-5">
+            <div class="card-body p-5"> <!-- this is were we write the body -->
+
+                <h1 style="text-align: center">Changement de mot de passe!</h1><br>
+                {% for message in app.flashes('error') %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                <form method="post">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Mot de passe:</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="pass"
+                               placeholder="Nouveau ...">
+                    </div>
+                    <input type="hidden" name="token" value="{{ token }}">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Confirmer mot de passe:</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="confpass"
+                               placeholder="Confirmation ...">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Soumettre</button>
+                </form>
+            </div>
+        </div>
+        </br>   </br>
+    </div>
+
+{% endblock %}

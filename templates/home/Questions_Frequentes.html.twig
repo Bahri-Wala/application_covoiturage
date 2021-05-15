@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container" id="heart">
+        <div class="card border-0 shadow my-5">
+            <div class="card-body p-5"> <!-- this is were we write the body -->
+                <div class="center btmspace-80">
+                    <h6 class="heading underline font-x2" style=" font-weight: 600; color: #0062cc;">Questions
+                        fréquentes</h6>
+                </div>
+                <h3>"Qu'est-ce que c'est le covoiturage?"</h3></br>
+                <p style="font-size: large"> Le covoiturage est l'utilisation collective d'un véhicule, par un
+                    conducteur non professionnel et un ou plusieurs
+                    tiers passagers, pour effectuer un même trajet.
+                    Il procure plusieurs avantages individuels (économiser les dépenses de carburant et de maintenance,
+                    développer
+                    le lien social) et collectifs (améliorer le taux de remplissage des véhicules, diminuer les
+                    embouteillages, la
+                    pollution et les accidents de la route).</p></br>
+                <h3>"Pourquoi je ne peux pas postuler des trajets?"</h3></br>
+                <p style="font-size: large"> Il faut d'abord créer un compte pour pouvoir postuler des trajets. Si vous
+                    possédez déjà un compte, connectez-vous {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a href="{{ path('profile') }}"> ici </a>
+                {% else %}
+                    <a href="{{ path('login') }}"> ici</a>
+                    {% endif %}. Sinon y créez un <a href="{{ path('registration') }}"> ici </a>.
+                </p></br>
+                <h3>"J'ai oublié mon mot de passe, que fais-je?"</h3></br>
+                <p style="font-size: large"> Dans la page de connexion, cliquez sur le bouton "restaurer mot de passe"
+                    et suivez les instructions.</p></br>
+                <h3>"Dois-je payer les trajets ici?"</h3></br>
+                <p style="font-size: large"> Habbatni est une plateforme d'intermédiaire d'informations entre les
+                    passagers et les condcuteurs, toute forme de payement doit être discutée entre eux sans notre
+                    intervention. </p></br>
+                <h3 style="font-size: large">"Pourquoi je dois laisser mon numéro de téléphone dans mon annonce de
+                    trajet?"</h3></br>
+                <p style="font-size: large"> Pour que les passagers peuvent vous contacter, il est nécessaire de mettre
+                    votre numéro de téléphone. </p></br>
+                <h3>"J'ai remarqué un bug sur le site"</h3></br>
+                <p style="font-size: large"> Rien n'est parfait et les sites sont toujours capables d'être améliorés.
+                    Contactez-nous par email sur wassalnisite@gmail.com </p></br>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

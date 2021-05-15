@@ -1,3 +1,44 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+Questions_Frequentes:
+  path: /home/Questions_Frequentes
+  controller:    Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template:  'home/Questions_Frequentes.html.twig'
+
+Qui_sommes_nous:
+  path: /home/Qui_sommes_nous
+  controller:    Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template:  'home/Qui_sommes_nous.html.twig'
+
+Accueil:
+  path: /home
+  controller:  Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: 'home/index.html.twig'
+
+login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+  defaults:
+    template: '/security/login.html.twig'
+
+reset_password:
+  path: /profile/reset_password
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: '/profile/reset_password.html.twig'
+
+Mentions_legales:
+  path: /home/Mentions_legales
+  controller:    Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template:  'home/Mentions_legales.html.twig'
+
+Nos_conseils:
+  path: /home/Nos_conseils
+  controller:    Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template:  'home/Nos_conseils.html.twig'

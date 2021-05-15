@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container" id="heart">
+        <div class="card border-0 shadow my-5" style="display: flex;flex-direction: row;justify-content: space-between">
+            <div class="card-body p-5"> <!-- this is were we write the body -->
+                <div style="display: flex;flex-direction: row">
+                    <h1 style="text-decoration: underline;text-shadow: black 6px 6px 6px"> {{ user.nom }}  {{ user.prenom }}</h1>
+                    <h5> (age : {{ date("now")|date('y') - date(user.birthday)|date('y') }} ans)</h5>
+                </div>
+                <div style="position: relative;left: 5%">
+                    <br>
+                    <h4> Sexe: {{ user.sexe }}</h4>
+                    <h4> N° telephone: {{ user.numero }}</h4>
+                    <h4> Profession: {{ user.profession }}</h4>
+                    <h4> E-mail: {{ user.email }}</h4>
+                    <br>
+                    <h2 style="color: blue;text-decoration:double "> Plus d'info : </h2>
+                    <br>
+                    {% if (user.getvoiture==null) %}
+                        <h4>Les preferences ne sont pas spécifié...!</h4>
+                    {% else %}
+                        <h3> La voiture: </h3>
+                        <div style="position: relative;left: 10%">
+                            <h4 style="margin-left: auto"> Marque de la voiture: {{ user.getvoiture.marque }}</h4>
+                            <h4> Couleur: {{ user.getvoiture.couleur }}</h4>
+                            <h4> Climatiseur: {{ user.getvoiture.climatiseur }}</h4>
+                        </div>
+                        <br>
+                        <h4> Tabac: {{ user.getvoiture.tabac }}</h4>
+
+                    {% endif %}
+                </div>
+            </div>
+            <div style="max-width: 30%;position: relative;left: -15%;top: 100px">
+                <!-- this is were we write the body -->
+                <img src="{{ asset(user.image) }}" class="rounded-circle">
+            </div>
+        </div>
+        </br>   </br>
+    </div>
+
+{% endblock %}

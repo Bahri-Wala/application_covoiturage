@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+ {% block body %}
+     <div class="container" id="heart">
+         <div class="card border-0 shadow my-5">
+             <div class="card-body p-5"> <!-- this is were we write the body -->
+                 <h1 style="text-align: center"> Inscription sur le site ! </h1></br>
+                 {{ form_start(form) }}
+                 <div class="row">
+                     <div class="col-6">{{ form_row(form.nom,{'label':'Nom d\'utilisateur','attr':{'placeholder':'Votre Nom...'}}) }}</div>
+                     <div class="col-6">{{ form_row(form.prenom,{'label':'Prenom d\'utilisateur','attr':{'placeholder':'Votre Prenom...'}}) }}</div>
+                 </div>
+
+                 <div class="row">
+                     <div class="col-6">{{ form_row(form.sexe,{'label':'Sexe'}) }}</div>
+                     <div class="col-6">{{ form_row(form.birthday,{'label':'Date de naissance'}) }}</div>
+                 </div>
+                 {{ form_row(form.Image,{'label':'Photo de profil','attr':{'placeholder':'Votre photo...'}}) }}
+                 {{ form_row(form.email,{'label':'E-mail','attr':{'placeholder':'Votre adresse mail...'}}) }}
+                 {{ form_row(form.profession,{'label':'Profession','attr':{'placeholder':'Votre Profession...'}}) }}
+                 {{ form_row(form.numero,{'label':'N° Téléphone','attr':{'placeholder':'Votre Numéro...'}}) }}
+                 {{ form_row(form.password,{'label':'Mot de passe','attr':{'placeholder':'Votre mot de passe...'}}) }}
+                 {{ form_row(form.confirm_password,{'label':'Confirmer mot de passe','attr':{'placeholder':'Confirmation...'}}) }}
+                 {{ form_rest(form) }}
+                 {{ form_end(form) }}
+             </div>
+         </div>
+     </div>
+
+ {% endblock %}
+
+
+
