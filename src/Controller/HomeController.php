@@ -14,6 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
+     * @Route("/")
+     */
+    public function redirectToHome(Request $request, EntityManagerInterface $manager)
+    {
+        return $this->redirectToRoute("home");
+    }
+
+    /**
      * @Route("/home", name="home")
      */
     public function main(Request $request, EntityManagerInterface $manager, TrajetRepository $trajetRepository)
